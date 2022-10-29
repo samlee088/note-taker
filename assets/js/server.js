@@ -1,27 +1,42 @@
 const express = require ('express');
+const path = require('path');
 const fs = require('fs');
 const { get } = require('http');
 const uuid = require('./uuid');
 
 const app = express();
 
-const port = 3001;
+const PORT = 3001;
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
+app.use(express.static('assets'));
 
+app.get('/', (req, res) => {
 
-
-app.get('./api/notes', (req,res) => {
-
-res.sendFile(path.join(_dirname,'../notes.html'));
-
+    
+res.sendFile(path.join(__dirname,'../../index.html'));
 console.info(`${req.method} request received to get reviews`);
 
 })
 
 
-app.post('./api/notes/', (req, res) => {
+app.get('/notes', (req,res) => {
+
+res.sendFile(path.join(__dirname,'../../notes.html'));
+console.info(`${req.method} request received to get reviews`);
+
+})
+
+app.get('/notes', (req,res) => {
+
+    var grabNotes = fs.readFileSync('../../db/db.json');
+    var displayNotes = JSON.parse(grabNotes);
+    res.json(grabNotes);
+})
+
+app.post('/notes', (req, res) => {
 
 console.info(`${req.method} request to post data was received`);
 
@@ -37,7 +52,7 @@ if (title && description) {
 
     //grab the data from the json file, and push in the new title object array
 
-    var data = fs.readFileSync('../db/db.json');
+    var data = fs.readFileSync('../../db/db.json');
     var myObject = JSON.parse(data);
     
     myObject.push(newNote);
