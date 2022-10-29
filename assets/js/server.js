@@ -29,11 +29,11 @@ console.info(`${req.method} request received to get reviews`);
 
 })
 
-app.get('/notes', (req,res) => {
+app.get('/api/notes', (req,res) => {
 
-    var grabNotes = fs.readFileSync('../../db/db.json');
+    var grabNotes = fs.readFileSync('db/db.json');
     var displayNotes = JSON.parse(grabNotes);
-    res.json(grabNotes);
+    res.json(displayNotes);
 })
 
 app.post('/notes', (req, res) => {
