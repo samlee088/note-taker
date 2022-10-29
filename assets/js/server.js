@@ -31,9 +31,9 @@ console.info(`${req.method} request received to get reviews`);
 
 app.get('/api/notes', (req,res) => {
 
-    var grabNotes = fs.readFileSync('db/db.json');
+    var grabNotes = fs.readFileSync('./db/db.json');
     var displayNotes = JSON.parse(grabNotes);
-    res.json(displayNotes);
+    return res.json(displayNotes);
 })
 
 app.post('/notes', (req, res) => {
@@ -52,7 +52,7 @@ if (title && description) {
 
     //grab the data from the json file, and push in the new title object array
 
-    var data = fs.readFileSync('../../db/db.json');
+    var data = fs.readFileSync('/db/db.json');
     var myObject = JSON.parse(data);
     
     myObject.push(newNote);

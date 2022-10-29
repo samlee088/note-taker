@@ -4,6 +4,8 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+console.log('linked');
+
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -25,8 +27,16 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-const getNotes = () =>
-  fetch('/notes', {
+// const getNotes = () =>
+//   fetch('/notes', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+
+  const getNotes = () =>
+  fetch('/api/notes', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
