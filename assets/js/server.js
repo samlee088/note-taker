@@ -39,39 +39,31 @@ app.get('/api/notes', (req,res) => {
 app.post('/notes', (req, res) => {
 
 console.info(`${req.method} request to post data was received`);
+console.info(req.body);
 
-const {title, description} = req.body;
-
-if (title && description) {
-    const newNote = {
-        title,
-        description,
-        noteID: uuid(),
-
-    };
-
-    //grab the data from the json file, and push in the new title object array
-
-    var data = fs.readFileSync('/db/db.json');
+    var data = fs.readFileSync('./db/db.json');
+    console.log(data);
     var myObject = JSON.parse(data);
-    
-    myObject.push(newNote);
+    console.info(myObject);
+    myObject.push(req.body);
     
     var newData = JSON.stringify(myObject);
-    fs.writeFile('../db/db.json', newData, (err) => {
-        err ? console.err('Error Detected') : console.log('Success: New Data Append');
+    fs.writeFile('./db/db.json', newData, (err) => {
+        err ? console.error('Error Detected') : console.log('Success: New Data Append');
     })
 
-
-
-}
-
+res.console.info(`${req.body} was added to db data`);
 
 })
 
 
 
+app.delete('/api/notes', (req, res) => {
+    console.info(`${req.method} was called to request delete`);
+var deleteData = fs.readFileSync('./db/db.json');
+console.info(deleteData);
 
+})
 
 
 
