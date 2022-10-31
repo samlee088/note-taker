@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { get } = require('http');
 const uuid = require('./uuid');
+const { title } = require('process');
 
 const app = express();
 
@@ -11,12 +12,12 @@ const PORT = 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
-app.use(express.static('assets'));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
 
     
-res.sendFile(path.join(__dirname,'../../index.html'));
+res.sendFile(path.join(__dirname,'public/index.html'));
 console.info(`${req.method} request received to get reviews`);
 
 })
@@ -24,7 +25,7 @@ console.info(`${req.method} request received to get reviews`);
 
 app.get('/notes', (req,res) => {
 
-res.sendFile(path.join(__dirname,'../../notes.html'));
+res.sendFile(path.join(__dirname,'public/notes.html'));
 console.info(`${req.method} request received to get reviews`);
 
 })
@@ -40,19 +41,24 @@ app.post('/notes', (req, res) => {
 
 console.info(`${req.method} request to post data was received`);
 console.info(req.body);
+   const {title,text} = req.body
+
+    const id = uuid();
+
+    const newNote = {title, text, id};
 
     var data = fs.readFileSync('./db/db.json');
     console.log(data);
     var myObject = JSON.parse(data);
     console.info(myObject);
-    myObject.push(req.body);
+    myObject.push(newNote);
     
     var newData = JSON.stringify(myObject);
     fs.writeFile('./db/db.json', newData, (err) => {
         err ? console.error('Error Detected') : console.log('Success: New Data Append');
     })
 
-res.console.info(`${req.body} was added to db data`);
+res.json("Push Succesfull");
 
 })
 
