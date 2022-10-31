@@ -1,9 +1,8 @@
 const express = require ('express');
 const path = require('path');
 const fs = require('fs');
-const { get } = require('http');
 const uuid = require('./uuid');
-const { title } = require('process');
+
 
 const app = express();
 
@@ -51,11 +50,12 @@ const {title,text} = req.body
 const id = uuid();
 const newNote = {title, text, id};
 
-var data = fs.readFileSync('./db/db.json');
-var myObject = JSON.parse(data);
-myObject.push(newNote);
-    
-var newData = JSON.stringify(myObject);
+var savedNotes = fs.readFileSync('./db/db.json');
+var savedArray = JSON.parse(savedNotes);
+
+savedArray.push(newNote);
+
+var newData = JSON.stringify(savedArray);
 fs.writeFile('./db/db.json', newData, (err) => {
     err ? console.error('Error Detected') : console.log('Success: New Data Append');
 })

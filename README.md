@@ -2,7 +2,7 @@
 
   ## Description
 
-  This is a project that was created in order for a user to jot down notes into a list and delete them when the notes are not needed anymore. The app works off of a client server model and is available through Heroku.  Additionally the project was created with an emphasis on express.js. 
+  This is a project that was created in order for a user to save notes into a list and delete them when the notes are not needed anymore. The app works off of a client server model and is available through Heroku, or can be downloaded off of Github to run locally. This project was created with an emphasis on creating a webpage with back-end concepts, such as back-end data saving and data retrieval with the use of a server. 
 
 
   ## Table of Contents
