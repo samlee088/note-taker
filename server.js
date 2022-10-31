@@ -64,10 +64,26 @@ res.json("Push Succesfull");
 
 
 
-app.delete('/api/notes', (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
     console.info(`${req.method} was called to request delete`);
 var deleteData = fs.readFileSync('./db/db.json');
 console.info(deleteData);
+var deleteArray = JSON.parse(deleteData);
+
+newArray = deleteArray.filter(function(item) {
+    return item.id != req.params.id
+
+
+});
+
+var newArrayFile = JSON.stringify(newArray);
+fs.writeFile('./db/db.json',newArrayFile, (err) => {
+err ? console.error('Error Detected') : console.log('Success: delete data');
+});
+
+
+res.json("delete successfull");
+
 
 })
 
